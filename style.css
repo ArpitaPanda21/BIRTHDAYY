@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: black;
+  color: white;
+  overflow-x: hidden;
+  font-family: "Bebas Neue", sans-serif;
+}
+
+/* Netflix Intro */
+.netflix-logo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: black;
+  color: #b6050d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 90px;
+  animation: logoFade 1s ease-in-out forwards;
+  z-index: 9999;
+}
+@keyframes logoFade {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+/* Header */
+.header-title {
+  color: #bb676b;
+  text-shadow: 0 0 12px #e50914;
+  padding-top: 20px;
+  transition: 0.2s ease-in-out;
+}
+
+/* Fullscreen Image */
+.hero-container {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Carousel */
+.section-title {
+  color: #e50914;
+}
+
+.carousel-row {
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.carousel-item {
+  width: 220px;
+  height: 120px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s;
+  border: 3px solid transparent;
+}
+
+.carousel-item:hover {
+  transform: scale(0.08);
+  border-color: #e50914;
+}
+
+.carousel-item.active {
+  border-color: #e50914;
+}
+
+/* Fullscreen Hide Text */
+.fullscreen-active *:not(.hero-container):not(.hero-image) {
+  display: none !important;
+}
+
+/* Confetti */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: hsl(calc(360 * var(--h)), 100%, 50%);
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  to { transform: translateY(100vh) rotate(720deg); }
+}
+
+/* Message Scene */
+.message-scene {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 999;
+  display: none;
+}
+.birthday-text {
+  font-size: 40px;
+  max-width: 70%;
+  margin: auto;
+  line-height: 1.2;
+}

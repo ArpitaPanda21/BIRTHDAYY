@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Sis</title>
+<style>
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+ body{ font-family: Arial, Helvetica, sans-serif; background-color: #000; color: #fff; overflow-x:hidden; }
+ .center { display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; animation: fadeIn 1.5s ease-in-out; }
+ button { background-color: #e50914; border: none; padding: 15px 25px; color: #fff; font-size: 18px; border-radius: 5px; cursor: pointer; transition: 0.3s ease-in-out; }
+ button:hover { background-color: #b00610; transform: scale(1.05); box-shadow: 0px 0px 10px #e50914; }
+ #mainContent { display: none; animation: fadeIn 2s ease-in-out; }
+ .header { padding: 20px; font-size: 28px; font-weight: bold; text-align: center; color: #e50914; text-shadow: 0 0 12px #e50914; }
+ .slideshow { width: 100%; max-width: 1200px; margin: auto; height: calc(100vh - 120px); display: flex; justify-content: center; align-items: center; }
+ .slideshow img { width: 90%; height: auto; border-radius: 10px; box-shadow: 0px 0px 15px #e50914; transition: transform 0.5s ease-in-out; }
+ .slideshow img:hover { transform: scale(1.05); }
+ @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+ @media (max-width: 768px) {
+  .header { font-size: 22px; }
+  button { font-size: 16px; padding: 12px 20px; }
+  .slideshow img { width: 100%; }
+ }
+@keyframes logoFade { 0% {opacity:0;} 30% {opacity:1;} 70% {opacity:1;} 100% {opacity:0;visibility:hidden;} }
+.confetti{
+ position:fixed;
+ width:10px;height:10px;
+ background:hsl(calc(360 * var(--h)),100%,50%);
+ animation:fall linear forwards;
+}
+@keyframes fall{to{transform:translateY(100vh) rotate(720deg);} }
+</style>
+</head>
+<body>
+
+<div id="logoIntro" style="position:fixed;top:0;left:0;width:100%;height:100vh;background:rgb(108, 40, 40);display:flex;justify-content:center;align-items:center;font-size:90px;color:#e50914;animation:logoFade 3s ease-in-out forwards;z-index:9999;">
+NETFLIX
+</div>
+
+<div id="intro" class="center">
+    <h1 style="font-size: 40px; color: #e50914;">HELLO CUTIEE ❤️</h1>
+    
+    <br>
+    <button onclick="showSurprise()">Click to view your surprise</button>
+</div>
+
+<div id="mainContent">
+    <div class="header">🎉 Happy Birthday Sis! 🎉</div>
+    <div class="slideshow">
+        <img id="photoSlide" src="C:\Users\panda\Desktop\HTML PROGRAMS\BIRTHDAY\Screenshot_2025_1114_120235.png" alt="Birthday Photo">
+    </div>
+</div>
+
+<script>
+ let photos = [
+  "C:\Users\panda\Desktop\HTML PROGRAMS\BIRTHDAY\IMG-20230808-WA0001.jpg",
+  "C:\Users\panda\Desktop\HTML PROGRAMS\BIRTHDAY\IMG-20251114-WA0012.jpg",
+  "C:\Users\panda\Desktop\HTML PROGRAMS\BIRTHDAY\Screenshot_2025_1114_120235.png",
+  "C:\Users\panda\Desktop\HTML PROGRAMS\BIRTHDAY\Screenshot_2025_1114_121113.png",
+  "C:\Users\panda\Desktop\HTML PROGRAMS\BIRTHDAY\Screenshot_2025_1114_120907.png",
+  "C:\Users\panda\Desktop\HTML PROGRAMS\BIRTHDAY\Screenshot_2025_1114_120544.png",
+  ];
+ let index = 0;
+
+ // Birthday messages A, B, C
+ const messages = [
+  "Happy Birthday Liza! You make the world brighter just by existing. 💖",
+  "Another year of being adorable, dramatic, and loved. Never change Liza! 😆💕",
+  "You are not just growing older, you're growing more amazing. So proud of you, Liza. 🌙💗"
+ ];
+ let msgIndex = 0;
+
+ function showSurprise() {
+    let userName = "LIZA";
+    document.querySelector(".header").innerHTML = `🎉 Happy Birthday LIZA! 🎉`;
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("messageScene").style.display = "flex";
+    document.getElementById("messageText").innerText = messages[msgIndex];
+    // play music once user has interacted (autoplay unlock already bound on touchstart)
+    document.getElementById("bgMusic").play().catch(()=>{});
+ }
+
+ function nextMessage() {
+    msgIndex++;
+    if (msgIndex < messages.length) {
+      document.getElementById("messageText").innerText = messages[msgIndex];
+    } else {
+      // all messages shown -> open main content (carousel + slideshow)
+      document.getElementById("messageScene").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+      startSlideshow();
+    }
+ }
+
+ function startSlideshow(){
+   // start with current index
+   document.getElementById("photoSlide").src = photos[index];
+   // start carousel auto-advance for slideshow
+   setInterval(() => {
+     index = (index + 1) % photos.length;
+     document.getElementById("photoSlide").src = photos[index];
+     // also highlight current carousel item if present
+     highlightCarousel(index);
+   }, 40000); // 40 seconds
+ }
+
+ function highlightCarousel(idx){
+   const items = document.querySelectorAll('.carousel-item');
+   items.forEach((it,i)=>{
+     it.classList.toggle('active', i===idx);
+   });
+ }
+
+ // mobile autoplay unlock (first touch)
+ window.addEventListener('touchstart', () => {
+  document.getElementById("bgMusic").play().catch(()=>{});
+ }, { once: true });
+
+ // build simple carousel UI dynamically
+ window.addEventListener('DOMContentLoaded', ()=>{
+   const carousel = document.getElementById('carousel');
+   photos.forEach((src,i)=>{
+     const div = document.createElement('div');
+     div.className = 'carousel-item'+(i===0? ' active':'');
+     div.style.backgroundImage = `url(${src})`;
+     div.addEventListener('click', ()=>{
+       index = i;
+       document.getElementById('photoSlide').src = photos[index];
+       highlightCarousel(index);
+     });
+     carousel.appendChild(div);
+   });
+ });
+// Confetti explosion on reveal
+function confettiBlast(){
+  for(let i=0;i<200;i++){
+    let conf = document.createElement('div');
+    conf.className='confetti';
+    conf.style.left=Math.random()*100+'vw';
+    conf.style.animationDuration=(Math.random()*3+2)+'s';
+    document.body.appendChild(conf);
+    setTimeout(()=>conf.remove(),5000);
+  }
+}
+
+const originalShowSurprise = showSurprise;
+showSurprise = function(){
+  originalShowSurprise();
+  confettiBlast();
+}
+</script>
+<iframe id="bgMusic" style="display:none;" src="https://www.youtube.com/embed/nAw2ooeubSQ?autoplay=1&mute=0&loop=1&playlist=nAw2ooeubSQ" allow="autoplay"></iframe>
+
+</body>
+</html>
