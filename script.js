@@ -2,7 +2,7 @@
    🎉 PHOTOS (Put your 10 images inside /photos/)
 ------------------------------------------ */
 const photos = [
-  "adaa.png", "kurti.png", "sare.png", "sareepose.png",
+  "sareepose.png", "kurti.png", "sare.png", "sar.png", "saree.png"
   "sty.png", "lehen.jpg", "mandir.png", "kurti.png", "baaratphoto.jpg"
 ];
 
@@ -98,3 +98,4 @@ photos.forEach((src, i)=>{
   };
   carouselRow.appendChild(div);
 });
+
